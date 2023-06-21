@@ -27,16 +27,34 @@ state of a patient must be died or alive - we adjust that as well
   
 # Your Question - Is dying independent of sex?
 
+## METHODS
+Today we are going to look at Sex of the patients and the result to see who died and who lived. WE are going to use Cat~Cat to help us look at the data.
 
 
-
+As the graph shows the Males dying more often than the females are dying. It is about 50-70, 50% of males are alive while 40% are dead. There are more males dying than females.
 
 
 ## Graphical results - use ggplot commands to do this  
 
+#### Plot barplots ggplot way
+
+```{r}
+dd2 <-  kRdata %>% group_by(result,Sex) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
 
 
-  
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd2,aes(x=result,y=count,fill=Sex))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(dd2,aes(x=Sex,y=prcnt*100,fill=result)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+  As the graph shows the Males dying more often than the females are dying. It is about 50-70, 50% of males are alive while 40% are dead. There are more males dying than females.
+
 
 
 
@@ -45,11 +63,26 @@ state of a patient must be died or alive - we adjust that as well
   
 ## Numerical results
 
+### Numerical Summaries  
+
+```{r}
+table1 <- xtabs(~result + Sex, data=kRdata)
+rowPerc(table1)
+colPerc(table1)
+```
+In the percentages there is a difference, about 12% of all people that are dead, 36% are female while 64%are male. in the second chart females Are ar 98.7 alive and males are at only 97. female 1.6 died, males 3%
+
 
 ## Inferential results 
+## Inferential  
 
-
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+In the first group of 1817 female were alive and the group of 1411 male are alive. Overall the females were alive more han the male. The value of P is one out of a thousand in the chi-square, in which that is a small chance. In fisher's test 9 out of 10.000 are about the same P value. the ratio between the two are also the same in the odds of dying. 
 
 
 ## Conclusions
-
+Today we learned about real world data on what happened in South Korea and reinforced the lessons we had previously learned. Using the help of our Helper file we were able to see the same data others see when they tested the results of the effect covid had on its people in South Korea. Turns out that covid doesn't really like males. males died at a ratio of about 1 out of a thousand.
