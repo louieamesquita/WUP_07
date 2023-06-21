@@ -81,7 +81,7 @@ chisq.test(table1)
 chisqtestGC(table1)
 fisher.test(table1)
 ```
-
+In the first group of 1817 female were alive and the group of 1411 male are alive. Overall the females were alive more han the male. The value of P is one out of a thousand in the chi-square, in which that is a small chance. In fisher's test 9 out of 10.000 are about the same P value. the ratio between the two are also the same in the odds of dying.
 
 ## Conclusions
 
